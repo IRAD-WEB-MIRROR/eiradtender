@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://tender.e-irad.org/sitemap.xml

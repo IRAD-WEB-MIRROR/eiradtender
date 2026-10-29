@@ -1,0 +1,58 @@
+/* tender.e-irad.org: State Procurement Portal. A table-heavy register of the mid-2010s, on purpose. */
+html { background: #f0efe9; }
+body { margin: 0; font: 12px/1.4 Arial, Helvetica, sans-serif; color: #1e1e1e; }
+a { color: #0b5d6b; }
+a:visited { color: #4b4f7a; }
+.wrap { width: 1000px; max-width: 100%; margin: 0 auto; background: #fff; border-left: 1px solid #d3d0c4; border-right: 1px solid #d3d0c4; box-sizing: border-box; }
+.hd { background: #1d5c63 linear-gradient(90deg, #17494f, #24707a); color: #fff; padding: 10px 14px; display: flex; align-items: center; gap: 14px; }
+.hd .emb { width: 46px; height: 46px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; flex: none; }
+.hd .emb img { width: 30px; }
+.hd .t1 { font: bold 19px Georgia, "Times New Roman", serif; letter-spacing: .01em; }
+.hd .t2 { font-size: 11px; color: #cfe7ea; }
+.hd .r { margin-left: auto; text-align: right; font-size: 11px; white-space: nowrap; }
+.hd .r a { color: #fff; margin-left: 6px; }
+.hd .r a.on { font-weight: bold; text-decoration: none; color: #ffd27a; }
+.hd .r .ei { display: inline-flex; align-items: center; gap: 4px; margin-top: 6px; color: #cfe7ea; }
+.hd .r .ei img { width: 16px; height: 16px; }
+.nav { background: #e98a1f linear-gradient(#f39a33, #d97a10); border-bottom: 1px solid #b4630a; display: flex; flex-wrap: wrap; }
+.nav a { color: #fff; font-weight: bold; text-decoration: none; padding: 7px 12px; border-right: 1px solid #f6b465; text-shadow: 0 1px 0 #a65a07; }
+.nav a:hover, .nav a.on { background: #b4630a; }
+.tick { background: #fffbe6; border-bottom: 1px solid #e6dcae; padding: 4px 12px; font-size: 11px; white-space: nowrap; overflow: hidden; }
+.tick b { color: #c0392b; animation: blink 1.2s steps(2, start) infinite; margin-right: 6px; }
+@keyframes blink { to { visibility: hidden; } }
+.tick span { display: inline-block; animation: run 60s linear infinite; padding-left: 100%; }
+@keyframes run { to { transform: translateX(-100%); } }
+@media (prefers-reduced-motion: reduce) { .tick span, .tick b { animation: none; padding-left: 0; } }
+.main { padding: 12px 14px 22px; }
+h1 { font: bold 17px Georgia, "Times New Roman", serif; color: #1d5c63; margin: 2px 0 10px; border-bottom: 2px solid #e98a1f; padding-bottom: 4px; }
+h2 { font: bold 13px Arial, sans-serif; color: #fff; background: #3b7d86; margin: 14px 0 0; padding: 4px 8px; }
+.stats { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 4px; }
+.stats div { flex: 1 1 150px; border: 1px solid #c9d9db; background: #f4f9f9; padding: 8px; }
+.stats b { display: block; font-size: 18px; color: #1d5c63; }
+table.t { border-collapse: collapse; width: 100%; }
+table.t th { background: #dfeced; color: #17494f; text-align: left; border: 1px solid #b9cfd1; padding: 4px 6px; font-size: 11px; }
+table.t td { border: 1px solid #d5e2e3; padding: 4px 6px; vertical-align: top; }
+table.t tr:nth-child(even) td { background: #f7fafa; }
+table.t td.n, table.t th.n { text-align: right; white-space: nowrap; }
+.tw { overflow-x: auto; }
+.st { display: inline-block; font-size: 10px; font-weight: bold; padding: 1px 5px; border-radius: 2px; white-space: nowrap; }
+.st-open { background: #2e8b3e; color: #fff; } .st-eval { background: #e98a1f; color: #fff; } .st-done { background: #1d5c63; color: #fff; } .st-fail { background: #999; color: #fff; } .st-canc { background: #b03a2e; color: #fff; }
+.filters { background: #f4f2ea; border: 1px solid #d3d0c4; padding: 8px; display: flex; flex-wrap: wrap; gap: 8px; align-items: end; margin-bottom: 8px; }
+.filters label { display: block; font-size: 11px; color: #555; }
+.filters input, .filters select { font: 12px Arial, sans-serif; padding: 3px; border: 1px solid #a9a597; max-width: 100%; }
+.btn { font: bold 12px Arial, sans-serif; background: linear-gradient(#f39a33, #d97a10); color: #fff; border: 1px solid #b4630a; padding: 4px 12px; cursor: pointer; border-radius: 2px; }
+.pg { margin: 8px 0; } .pg a, .pg b { margin-right: 6px; }
+dl.kv { display: grid; grid-template-columns: 210px 1fr; margin: 0; border: 1px solid #d5e2e3; }
+dl.kv dt { background: #eef5f5; padding: 4px 8px; color: #3b5658; border-bottom: 1px solid #d5e2e3; }
+dl.kv dd { margin: 0; padding: 4px 8px; border-bottom: 1px solid #d5e2e3; }
+.note { background: #fffbe6; border: 1px solid #e6dcae; padding: 6px 8px; margin: 8px 0; font-size: 11px; }
+.muted { color: #6a6a6a; } .small { font-size: 11px; }
+.win td { font-weight: bold; }
+.ft { background: #2b2b2b; color: #bbb; font-size: 11px; padding: 10px 14px; }
+.ft a { color: #fff; }
+@media (max-width: 760px) {
+  .hd { flex-wrap: wrap; } .hd .r { margin-left: 0; text-align: left; width: 100%; } .nav a { padding: 6px 8px; font-size: 11px; }
+  .filters > div { width: 100%; } .filters select, .filters input { width: 100%; box-sizing: border-box; }
+  dl.kv { grid-template-columns: 1fr; } dl.kv dt { border-bottom: 0; } .main { padding: 10px; }
+}
+table.t td:first-child a { white-space: nowrap; }
