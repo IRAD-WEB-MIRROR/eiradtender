@@ -26,6 +26,7 @@
     m_sup: { en: "Supplier register", ir: "Jetkiruuchülör reestri", ru: "Реестр поставщиков" },
     m_bl: { en: "Unreliable suppliers", ir: "Ishenimsiz jetkiruuchülör", ru: "Недобросовестные поставщики" },
     m_rules: { en: "Rules", ir: "Erejeler", ru: "Правила" },
+    m_news: { en: "Announcements", ir: "Kulaktandıruular", ru: "Объявления" },
     tick: { en: "NOTICE", ir: "KULAKTANDIRUU", ru: "ВНИМАНИЕ" },
     tickT: { en: "Bids are accepted on paper only, in a sealed envelope, at the address of the procuring entity before the deadline (Astana time, UTC+6). Electronic bidding will open in 2027. The portal is updated each working day by 18:00.", ir: "Arızdar kagaz türündö gana, möörlöngön konvertte, buyurtmachının darekine möönötkö cheyin kabıl alınat (Astana ubaktısı, UTC+6). Elektronduk konkurs 2027-jılı achılat. Portal ar bir jumush künü saat 18:00gö cheyin jañılanat.", ru: "Заявки принимаются только на бумаге, в запечатанном конверте, по адресу заказчика до окончания срока (время Астаны, UTC+6). Электронные торги откроются в 2027 году. Портал обновляется каждый рабочий день до 18:00." },
     foot: { en: "© 2015–2026 Public Procurement Department, Ministry of Economy of the ISEZ. Notices are published under the Public Procurement Act 2015. In case of any difference the paper notice kept by the procuring entity prevails. Helpline for suppliers: Talas 2-31-07-40, Mon–Fri 9:00–17:00.", ir: "© 2015–2026 IAEZdin Ekonomika ministrligi, Mamlekettik satıp aluular departamenti. Bildirüülör 2015-jılkı Mamlekettik satıp aluular jönündö aktka ılayık jariyalanat. Ayırmachılık bolso, buyurtmachıda saktalgan kagaz bildirüü koldonulat. Jetkiruuchülör üchün telefon: Talas 2-31-07-40, Dü–Ju 9:00–17:00.", ru: "© 2015–2026 Департамент государственных закупок Министерства экономики ОЭЗИ. Объявления публикуются согласно Закону о государственных закупках 2015 года. В случае расхождений действует бумажное объявление, хранящееся у заказчика. Телефон для поставщиков: Талас 2-31-07-40, пн–пт 9:00–17:00." },
@@ -86,7 +87,7 @@
   function chrome() {
     document.documentElement.lang = { en: "en", ir: "ky-Latn", ru: "ru" }[LANG];
     var names = { ir: "Irad tili", ru: "Русский", en: "English" };
-    var menu = [["/", T.m_home, "home"], ["/tenders.html", T.m_list, "list"], ["/suppliers.html", T.m_sup, "suppliers"], ["/blacklist.html", T.m_bl, "blacklist"], ["/rules.html", T.m_rules, "rules"]];
+    var menu = [["/", T.m_home, "home"], ["/tenders.html", T.m_list, "list"], ["/suppliers.html", T.m_sup, "suppliers"], ["/blacklist.html", T.m_bl, "blacklist"], ["/rules.html", T.m_rules, "rules"], ["/news.html", T.m_news, "news"]];
     var on = { tender: "list", supplier: "suppliers" }[PAGE] || PAGE;
     $("#top").innerHTML = '<div class="wrap"><div class="hd"><a class="emb" href="/"><img src="/assets/emblem.svg" alt=""></a><div><div class="t1">' + esc(L(T.t1)) + '</div><div class="t2">' + esc(L(T.t2)) + '</div></div><div class="r">' + LANGS.map(function (l) { return '<a href="?lang=' + l + '" data-l="' + l + '"' + (l === LANG ? ' class="on"' : "") + ">" + names[l] + "</a>"; }).join("") + '<br><a class="ei" href="https://e-irad.org/"><img src="/assets/eirad.svg" alt="">' + esc(L(T.eirad)) + '</a></div></div><div class="nav">' +
       menu.map(function (m) { return '<a href="' + m[0] + '"' + (m[2] === on ? ' class="on"' : "") + ">" + esc(L(m[1])) + "</a>"; }).join("") + '</div><div class="tick"><b>' + esc(L(T.tick)) + "</b><span>" + esc(L(T.tickT)) + '</span></div><div class="main" id="app">' + esc(L(T.loading)) + '</div><div class="ft">' + esc(L(T.foot)) + "</div></div>";
@@ -276,11 +277,37 @@
     $("#app").innerHTML = "<h1>" + esc(L(RU.h)) + '</h1><dl class="kv">' + RU.rows.map(function (r) { return "<dt>" + esc(L(r[0])) + "</dt><dd>" + esc(L(r[1])) + "</dd>"; }).join("") + "</dl>";
   }
 
+
+  /* ---------- announcements ---------- */
+  var NW = {
+    h: { en: "Announcements", ir: "Kulaktandıruular", ru: "Объявления" },
+    items: [
+      { d: "2026-10-28", h: { en: "Electronic bidding from 2027: seminars for procuring entities", ir: "2027-jıldan elektronduk arızdar: buyurtmachılar üchün seminarlar", ru: "Электронные заявки с 2027 года: семинары для заказчиков" },
+        b: { en: "From 16 November to 18 December 2026 the Department holds seminars on electronic bidding for the staff of procuring entities at Government House, Talas, and at Nurzhan City Hall. Until electronic bidding opens, bids are accepted on paper only.", ir: "Departament 2026-jıldın 16-noyabrınan 18-dekabrına cheyin Ökmöt üyündö (Talas) jana Nurzhan shaardık meriyasında buyurtmachılardın kızmatkerleri üchün elektronduk arız berüü boyuncha seminarlar ötkörot. Elektronduk arız berüü achılgancha arızdar kagaz türündö gana kabıl alınat.", ru: "С 16 ноября по 18 декабря 2026 года Департамент проводит семинары по электронной подаче заявок для сотрудников заказчиков в Доме правительства (Талас) и в мэрии Нуржана. До открытия электронной подачи заявки принимаются только на бумаге." } },
+      { d: "2026-09-21", h: { en: "Reminder: bids in the state language", ir: "Eskertüü: arızdar mamlekettik tilde", ru: "Напоминание: заявки на государственном языке" },
+        b: { en: "Under article 17(4) of the Act, bids and the documents attached to them are submitted in the state language. A document in another language must be accompanied by a certified translation. Bids that do not meet this requirement are rejected at opening.", ir: "Mıyzamdın 17(4)-beresine ılayık arızdar jana alarga tirkelgen dokumentter mamlekettik tilde berilet. Bashka tildegi dokumentke kübölöndürülgön kotormo tirkelet. Bul talapka tuura kelbegen arızdar achuuda chetke kagılat.", ru: "Согласно части 4 статьи 17 Закона заявки и прилагаемые к ним документы подаются на государственном языке. Документ на другом языке подаётся с заверенным переводом. Заявки, не отвечающие этому требованию, отклоняются при вскрытии." } },
+      { d: "2026-07-01", h: { en: "List of unreliable suppliers updated", ir: "Ishenimsiz jetkiruuchülördün tizmesi jañılandı", ru: "Обновлён список недобросовестных поставщиков" },
+        b: { en: "A supplier on the list may not take part in public procurement for two years (art. 43). Procuring entities must check the list before signing a contract.", ir: "Tizmedegi jetkiruuchü eki jıl boyu mamlekettik satıp aluularga katısha albayt (43-bere). Buyurtmachılar kelishimge kol koyuudan murun tizmeni tekshirüügö tiyish.", ru: "Поставщик из списка не может участвовать в государственных закупках в течение двух лет (статья 43). Заказчики обязаны проверять список до подписания договора." } },
+      { d: "2025-11-03", h: { en: "New version of the portal", ir: "Portaldın jañı versiyası", ru: "Новая версия портала" },
+        b: { en: "From 3 November 2025 the portal publishes, for every procurement, the bids received and the contract signed, as well as the register of suppliers and the list of unreliable suppliers. Notices published before this date are kept by the procuring entities.", ir: "2025-jıldın 3-noyabrınan bashtap portal ar bir satıp aluu boyuncha kelip tüshkön arızdardı jana tüzülgön kelishimdi, oshondoy ele jetkiruuchülör reestrin jana ishenimsiz jetkiruuchülördün tizmesin jariyalayt. Bul kündön murun jariyalangan kulaktandıruular buyurtmachılarda saktalat.", ru: "С 3 ноября 2025 года портал публикует по каждой закупке поступившие заявки и заключённый договор, а также реестр поставщиков и список недобросовестных поставщиков. Объявления, опубликованные до этой даты, хранятся у заказчиков." } },
+      { d: "2021-07-01", h: { en: "Amendments to the Public Procurement Act", ir: "Mamlekettik satıp aluular jönündö mıyzamga özgörtüülör", ru: "Изменения в Закон о государственных закупках" },
+        b: { en: "The amendments to the Public Procurement Act 2015 enter into force. Request for quotations may now be used for purchases up to 2,500,000 som. The Rules page has been updated.", ir: "2015-jılkı Mamlekettik satıp aluular jönündö mıyzamga kirgizilgen özgörtüülör küchünö kirdi. Baa sunushtarın suratuu ıkması emi 2 500 000 somgo cheyinki satıp aluularda koldonulat. «Erejeler» beti jañılandı.", ru: "Вступили в силу изменения в Закон о государственных закупках 2015 года. Запрос котировок теперь применяется для закупок до 2 500 000 сом. Страница «Правила» обновлена." } },
+      { d: "2020-03-30", h: { en: "Bids during the quarantine regime", ir: "Karantin rejimi uchurundagı arızdar", ru: "Заявки в период режима карантина" },
+        b: { en: "During the quarantine regime bids in sealed envelopes are accepted at the entrance of the procuring entity's building. Bids are opened without the public, and the minutes are published on the portal.", ir: "Karantin rejimi uchurunda möörlöngön konverttegi arızdar buyurtmachının imaratının kireberishinde kabıl alınat. Arızdar el katıshpastan achılat, protokoldor portalda jariyalanat.", ru: "На время режима карантина заявки в запечатанных конвертах принимаются у входа в здание заказчика. Вскрытие заявок проводится без публики, протоколы публикуются на портале." } },
+      { d: "2016-02-01", h: { en: "The State Procurement Portal opens", ir: "Mamlekettik satıp aluular portalı achıldı", ru: "Открыт Портал государственных закупок" },
+        b: { en: "Under the Public Procurement Act 2015, notices of open tenders and requests for quotations of the state bodies of the ISEZ are published on this portal. Bids are submitted on paper at the address of the procuring entity.", ir: "2015-jılkı Mamlekettik satıp aluular jönündö mıyzamga ılayık IAEZdin mamlekettik organdarının achık konkurstarı jana baa sunushtarın suratuular jönündö kulaktandıruular ushul portalda jariyalanat. Arızdar kagaz türündö buyurtmachının dareginde berilet.", ru: "Согласно Закону о государственных закупках 2015 года объявления об открытых конкурсах и запросах котировок государственных органов ОЭЗИ публикуются на этом портале. Заявки подаются на бумаге по адресу заказчика." } }
+    ]
+  };
+  function pageNews() {
+    $("#app").innerHTML = "<h1>" + esc(L(NW.h)) + '</h1><div class="news">' + NW.items.map(function (n) { return '<div class="nw"><div class="nd">' + dmy(n.d) + "</div><h2>" + esc(L(n.h)) + "</h2><p>" + esc(L(n.b)) + "</p></div>"; }).join("") + "</div>";
+  }
+
   function render() {
     chrome();
     if (PAGE === "rules") return pageRules();
+    if (PAGE === "news") return pageNews();
     if (!D) { if (D === false) $("#app").innerHTML = '<div class="note">' + esc(L(T.nodata)) + "</div>"; return; }
-    ({ home: pageHome, list: pageList, tender: pageTender, suppliers: pageSuppliers, supplier: pageSupplier, blacklist: pageBlacklist, rules: pageRules }[PAGE] || pageHome)();
+    ({ home: pageHome, list: pageList, tender: pageTender, suppliers: pageSuppliers, supplier: pageSupplier, blacklist: pageBlacklist, rules: pageRules, news: pageNews }[PAGE] || pageHome)();
   }
   render();
   Promise.all(["/data/tenders.json", "/data/suppliers.json"].map(function (u) { return fetch(u).then(function (r) { if (!r.ok) throw r.status; return r.json(); }); }))
