@@ -100,7 +100,7 @@
     var cell = {
       no: function (t) { return "<td>" + tLink(t) + "</td>"; },
       title: function (t) { return "<td>" + esc(L(t.title)) + "</td>"; },
-      ent: function (t) { return '<td class="small">' + esc(L(D.entities[t.entity])) + "</td>"; },
+      ent: function (t) { return '<td class="small">' + entA(t.entity) + "</td>"; },
       meth: function (t) { return '<td class="small">' + esc(L(D.methods[t.method])) + "</td>"; },
       est: function (t) { return '<td class="n">' + num(t.estimate) + "</td>"; },
       pub: function (t) { return '<td class="n">' + dmy(t.published) + "</td>"; },
@@ -187,7 +187,7 @@
     var id = (q.get("id") || "").toUpperCase().trim(), t = D.tenders.filter(function (x) { return x.id === id; })[0];
     if (!t) { $("#app").innerHTML = "<h1>" + esc(L(T.m_list)) + '</h1><div class="note">' + esc(L(V.notFound)) + '</div><p><a href="/tenders.html">' + esc(L(V.back)) + "</a></p>"; return; }
     var s = status(t), w = winner(t);
-    var kv = [[T.c_no, esc(t.id)], [T.c_title, "<b>" + esc(L(t.title)) + "</b>"], [T.c_ent, '<a href="/tenders.html?e=' + t.entity + '">' + esc(L(D.entities[t.entity])) + "</a>"], [T.c_meth, esc(L(D.methods[t.method]))], [T.c_est, som(t.estimate)], [T.c_pub, dmy(t.published)], [T.c_dl, dmy(t.deadline) + ", 10:00"], [T.c_st, badge(t)]];
+    var kv = [[T.c_no, esc(t.id)], [T.c_title, "<b>" + esc(L(t.title)) + "</b>"], [T.c_ent, '<a href="/tenders.html?e=' + t.entity + '">' + esc(L(D.entities[t.entity])) + "</a>" + (EURL[t.entity] ? ' · <a href="' + EURL[t.entity] + '">' + EURL[t.entity].replace(/^https:\/\/|\/$/g, "") + "</a>" : "")], [T.c_meth, esc(L(D.methods[t.method]))], [T.c_est, som(t.estimate)], [T.c_pub, dmy(t.published)], [T.c_dl, dmy(t.deadline) + ", 10:00"], [T.c_st, badge(t)]];
     if (t.reason) kv.push([V.reason, esc(L(t.reason))]);
     if (s === "open") kv.push([V.docs, esc(L(V.docsV))]);
     var h = "<h1>" + esc(t.id) + ": " + esc(L(t.title)) + '</h1><dl class="kv">' + kv.map(function (r) { return "<dt>" + esc(L(r[0])) + "</dt><dd>" + r[1] + "</dd>"; }).join("") + "</dl>";
@@ -244,7 +244,7 @@
     $("#app").innerHTML = "<h1>" + esc(L(s.name)) + '</h1><dl class="kv"><dt>' + esc(L(T.c_addr)) + "</dt><dd>" + esc(L(s.address)) + "</dd><dt>" + esc(L(T.c_dir)) + "</dt><dd>" + esc(s.director) + "</dd><dt>" + esc(L(T.c_reg)) + "</dt><dd>" + dmy(s.reg) + "</dd><dt>" + esc(L(T.c_bids)) + "</dt><dd>" + x.bids + "</dd><dt>" + esc(L(T.c_wins)) + "</dt><dd>" + x.wins + "</dd><dt>" + esc(L(T.c_tot)) + "</dt><dd>" + som(x.tot) + "</dd></dl><h2>" + esc(L(R.hist)) + "</h2>" +
       '<div class="tw"><table class="t"><tr><th>' + esc(L(T.c_no)) + "</th><th>" + esc(L(T.c_title)) + "</th><th>" + esc(L(T.c_ent)) + '</th><th class="n">' + esc(L(T.c_price)) + ", " + esc(L(T.som)) + "</th><th>" + esc(L(T.c_res)) + "</th></tr>" + mine.map(function (t) {
         var b = t.bids.filter(function (y) { return y.s === s.id; })[0];
-        return "<tr><td>" + tLink(t) + "</td><td>" + esc(L(t.title)) + '</td><td class="small">' + esc(L(D.entities[t.entity])) + '</td><td class="n">' + num(b.price) + "</td><td>" + (b.win && t.contract ? "<b>" + esc(L(V.won)) + "</b>" : b.rej ? esc(L(b.rej)) : t.cancelled ? esc(L(T.s_canc)) : esc(L(V.lost))) + "</td></tr>";
+        return "<tr><td>" + tLink(t) + "</td><td>" + esc(L(t.title)) + '</td><td class="small">' + entA(t.entity) + '</td><td class="n">' + num(b.price) + "</td><td>" + (b.win && t.contract ? "<b>" + esc(L(V.won)) + "</b>" : b.rej ? esc(L(b.rej)) : t.cancelled ? esc(L(T.s_canc)) : esc(L(V.lost))) + "</td></tr>";
       }).join("") + '</table></div><p class="pg"><a href="/suppliers.html">' + esc(L(V.back)) + "</a></p>";
     document.title = L(s.name) + " | tender.e-irad.org";
   }
@@ -259,8 +259,18 @@
     }).join("") + "</table></div>";
   }
 
+  /* procuring entities' own websites (links out from the lists and the notice) */
+  var EURL = { gov: "https://iradgov.org/", econ: "https://economy.iradgov.org/", fin: "https://economy.iradgov.org/",
+    gend: "https://jandarm.iradgov.org/", health: "https://health.iradgov.org/", edu: "https://education.iradgov.org/",
+    eqa: "https://education.iradgov.org/", inf: "https://e-irad.org/", rail: "https://railways.iradgov.org/",
+    post: "https://post.iradgov.org/", cust: "https://customs.iradgov.org/", met: "https://gidromet.iradgov.org/",
+    arch: "https://archives.iradgov.org/", tec: "https://elections.iradgov.org/", boi: "https://bank.iradgov.org/",
+    ctl: "https://talas.iradgov.org/", cnz: "https://nurzhan.iradgov.org/", cij: "https://iyikjanyl.iradgov.org/" };
+  function entA(k) { var n = esc(L(D.entities[k])); return EURL[k] ? '<a href="' + EURL[k] + '">' + n + "</a>" : n; }
+
   /* ---------- rules ---------- */
   var RU = {
+    ebid: { en: "From 2027 suppliers will sign in with e-Irad ID to submit electronic bids:", ir: "2027-jıldan jetkiruuchülör elektronduk arızdardı e-Irad ID arkıluu kirip beret:", ru: "С 2027 года поставщики будут подавать электронные заявки после входа через e-Irad ID:" },
     rows: [
       [{ en: "Law", ir: "Mıyzam", ru: "Закон" }, { en: "Public Procurement Act 2015 of the ISEZ, as amended in 2021; Regulations on the State Procurement Portal (Order of the Ministry of Economy No. 112, 2016).", ir: "IAEZdin 2015-jılkı Mamlekettik satıp aluular jönündö aktı, 2021-jılkı özgörtüülör menen; Mamlekettik satıp aluular portalı jönündö jobo (Ekonomika ministrliginin №112 buyrugu, 2016).", ru: "Закон ОЭЗИ о государственных закупках 2015 года с изменениями 2021 года; Положение о Портале государственных закупок (приказ Министерства экономики № 112, 2016)." }],
       [{ en: "Open tender", ir: "Achık konkurs", ru: "Открытый конкурс" }, { en: "The standard method. Notice at least 30 days before the deadline (15 days below 1,000,000 som). Lowest evaluated price wins.", ir: "Negizgi ıkma. Bildirüü möönöttön keminde 30 kün murun (1 000 000 somdon tömön bolso 15 kün). Eñ tömön baalangan baa utat.", ru: "Основной метод. Объявление не менее чем за 30 дней до срока (15 дней при сумме до 1 000 000 сом). Побеждает наименьшая оценённая цена." }],
@@ -274,7 +284,8 @@
     h: { en: "Rules of public procurement", ir: "Mamlekettik satıp aluulardın erejeleri", ru: "Правила государственных закупок" }
   };
   function pageRules() {
-    $("#app").innerHTML = "<h1>" + esc(L(RU.h)) + '</h1><dl class="kv">' + RU.rows.map(function (r) { return "<dt>" + esc(L(r[0])) + "</dt><dd>" + esc(L(r[1])) + "</dd>"; }).join("") + "</dl>";
+    $("#app").innerHTML = "<h1>" + esc(L(RU.h)) + '</h1><dl class="kv">' + RU.rows.map(function (r) { return "<dt>" + esc(L(r[0])) + "</dt><dd>" + esc(L(r[1])) + "</dd>"; }).join("") + "</dl>" +
+      '<p>' + esc(L(RU.ebid)) + ' <a href="https://id.e-irad.org/">id.e-irad.org</a></p>';
   }
 
 
